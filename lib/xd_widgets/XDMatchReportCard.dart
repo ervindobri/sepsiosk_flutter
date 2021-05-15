@@ -1,98 +1,119 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
+import 'package:get/get.dart';
+import 'package:sepsiosk/globals.dart';
 
 class XDMatchReportCard extends StatelessWidget {
   final VoidCallback? openDetailMatchReport;
+  final String? image;
+  final int matchDay;
+  final String result;
+  final String description;
+
   XDMatchReportCard({
     Key? key,
-    this.openDetailMatchReport,
+    this.openDetailMatchReport, required this.matchDay,required this.result,required this.description,  this.image,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => openDetailMatchReport?.call(),
-      child: Stack(
-        children: <Widget>[
-          Container(),
-          Pinned.fromPins(
-            Pin(start: 86.0, end: 0.0),
-            Pin(start: 0.0, end: 0.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                color: const Color(0xffffffff),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x26000000),
-                    offset: Offset(0, 3),
-                    blurRadius: 20,
+    return Container(
+      width: 300,
+      height: 270,
+      child: GestureDetector(
+        onTap: () => openDetailMatchReport?.call(),
+        child: Stack(
+          children: <Widget>[
+              Container(
+                // width: 100,
+                // color: Colors.black,
+                height: 250,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Matchday",
+                      style: Get.textTheme.bodyText1,
+                    ),
+                    AutoSizeText(
+                        matchDay.toString(),
+                        minFontSize: 110,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          shadows: [BoxShadow(
+                            color: Globals.primaryColor.withOpacity(.2),
+                            blurRadius: 25,
+                            spreadRadius: -2
+                          )]
+                        ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: 100,
+                child: Container(
+                  width: 200,
+                  height: 270,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [BoxShadow(
+                      color: Colors.black.withOpacity(.1),
+                      blurRadius: 25
+                    )]
                   ),
-                ],
-              ),
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 137.5, end: 5.5),
-            Pin(size: 97.5, start: 4.0),
-            child:
-                // Adobe XD layer: 'NoPath' (shape)
-                Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12.0),
-                  topRight: Radius.circular(12.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: Get.width,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                image ?? ""
+                              ),
+                              fit: BoxFit.cover
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              topRight: Radius.circular(12),
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(12)
+                            ),
+                            child: Center(
+                              child: AutoSizeText(
+                                result,
+                                style: Get.textTheme.subtitle1,
+                              ),
+                            ),
+                          ),
+                        ),
+                        AutoSizeText(
+                          description,
+                          maxLines: 4,
+                          maxFontSize: 20,
+                          style: Get.textTheme.bodyText2,
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-                image: DecorationImage(
-                  image: const AssetImage(''),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 138.0, end: 5.0),
-            Pin(size: 49.0, end: 11.0),
-            child: SingleChildScrollView(
-                child: Text(
-              'Lorem ipsum dolor sit amet, \nconsectetur adipiscing elit. \nNullam finibus in libero nec vehicula. \nMaecenas velit tortor,\n auctor ac mi sit amet, laoreet pretium leo.',
-              style: TextStyle(
-                fontFamily: 'PT Sans',
-                fontSize: 10,
-                color: const Color(0xffd52146),
-                height: 0.5,
-              ),
-              textHeightBehavior:
-                  TextHeightBehavior(applyHeightToFirstAscent: false),
-              textAlign: TextAlign.left,
-            )),
-          ),
-          Pinned.fromPins(
-            Pin(size: 138.0, end: 5.0),
-            Pin(size: 31.0, middle: 0.6185),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                color: const Color(0xff929292),
-              ),
-            ),
-          ),
-          Pinned.fromPins(
-            Pin(size: 38.0, middle: 0.7194),
-            Pin(size: 32.0, middle: 0.6221),
-            child: Text(
-              '1 - 1',
-              style: TextStyle(
-                fontFamily: 'PT Sans',
-                fontSize: 25,
-                color: const Color(0xffffffff),
-                height: 0.52,
-              ),
-              textHeightBehavior:
-                  TextHeightBehavior(applyHeightToFirstAscent: false),
-              textAlign: TextAlign.left,
-            ),
-          ),
-        ],
+              )
+          ],
+        ),
       ),
     );
   }
