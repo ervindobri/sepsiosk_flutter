@@ -62,6 +62,7 @@ class XDRecentNewsCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: FaIcon(
                     FontAwesomeIcons.clock,
+                    size: 18,
                     color: Globals.primaryColor,
                   ),
                 ),

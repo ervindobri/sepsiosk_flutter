@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sepsiosk/custom_widgets/match_reports.dart';
 
 import '../globals.dart';
 import '../xd_widgets/XDRecentNewsCard.dart';
@@ -17,32 +18,21 @@ class RecentNews extends StatelessWidget {
         height: 250,
         child: Column(
           children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    "Recent news",
-                    style: Get.textTheme.bodyText2
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: InkWell(
-                    child: Text(
-                      "See All",
-                      style: TextStyle(fontSize: 15, decoration: TextDecoration.underline),),
-                  ),
-                )
-              ],
+            SectionHeader(
+              title: 'Recent News',
+              seeAllEnabled: true,
             ),
             Row(
-              children: Globals.recentNews.map((e)
-              => Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: XDRecentNewsCard(title: e[0], subTitle: e[1], date: e[2],),
-              )).toList()
-            ),
+                children: Globals.recentNews
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: XDRecentNewsCard(
+                            title: e[0],
+                            subTitle: e[1],
+                            date: e[2],
+                          ),
+                        ))
+                    .toList()),
           ],
         ),
       ),

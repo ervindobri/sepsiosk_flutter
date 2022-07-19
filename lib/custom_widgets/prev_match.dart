@@ -7,7 +7,7 @@ class PreviousMatchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(25.0),
+      padding: const EdgeInsets.only(bottom: 25.0),
       child: Container(
         width: Get.width*.21,
         height: 170,

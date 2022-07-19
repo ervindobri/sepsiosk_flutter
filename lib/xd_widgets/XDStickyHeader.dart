@@ -4,9 +4,24 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../globals.dart';
 
-class XDStickyHeader extends StatelessWidget {
+class XDStickyHeader extends StatefulWidget {
 
- late final TextEditingController textController = new TextEditingController();
+  @override
+  _XDStickyHeaderState createState() => _XDStickyHeaderState();
+}
+
+class _XDStickyHeaderState extends State<XDStickyHeader> {
+  int _selectedIndex = 0;
+  late final TextEditingController textController = new TextEditingController();
+
+  late List<dynamic> firstBatch;
+  late List<dynamic> lastBatch;
+  @override
+  void initState() {
+    firstBatch = Globals.menuItems.take(3).toList();
+    lastBatch = Globals.menuItems.skip(3).take(3).toList();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,15 +54,34 @@ class XDStickyHeader extends StatelessWidget {
                     children: [
                       //menu items
                       Row(
-                        children: Globals.menuItems.take(3).map((e) =>
+                        children: List.generate(firstBatch.length, (index) =>
                             Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Container(
-                                width: 100,
-                                // color: Colors.black,
-                                child: Center(
-                                  child: Text(e.toString().toUpperCase(),
-                                    style: Get.textTheme.subtitle1,),
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    _selectedIndex = index;
+                                  });
+                                },
+                                child: Container(
+                                  width: 100,
+                                  // color: Colors.black,
+                                  child: Center(
+                                    child: Column(
+                                      children: [
+                                        Text(firstBatch[index].toString().toUpperCase(),
+                                          style: Get.textTheme.subtitle1,),
+                                        if ( _selectedIndex == index)
+                                          Container(
+                                            width: 60,
+                                            height: 5,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                            ),
+                                          )
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             )
@@ -58,15 +92,34 @@ class XDStickyHeader extends StatelessWidget {
                         // color: Colors.black,
                       ),
                       Row(
-                        children: Globals.menuItems.skip(3).map((e)
+                        children: List.generate(lastBatch.length, (index)
                         => Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Container(
-                            width: 100,
-                            child: Center(
-                              child: Text(e.toString().toUpperCase(),
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: (){
+                              setState(() {
+                                _selectedIndex = index+3;
+                              });
+                            },
+                            child: Container(
+                              width: 100,
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Text(lastBatch[index].toString().toUpperCase(),
 
-                                  style: Get.textTheme.subtitle1),
+                                        style: Get.textTheme.subtitle1),
+                                    if ( _selectedIndex == index+3)
+                                      Container(
+                                        width: 60,
+                                        height: 5,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         )).toList(),
